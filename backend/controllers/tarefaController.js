@@ -1,39 +1,31 @@
-const Tarefa = require("../models/Tarefa");
+const Tarefa = require('../models/tarefa');
 
-module.exports = {
-  async listar(req, res) {
+exports.listar = async (req, res) => {
+  try {
     const tarefas = await Tarefa.findAll();
     res.json(tarefas);
-  },
+  } catch (err) {
+    res.status(500).json({ erro: err.message });
+  }
+};
 
-  async criar(req, res) {
-    try {
-      const { titulo, descricao, responsavel } = req.body;
-      const tarefa = await Tarefa.create({ titulo, descricao, responsavel });
-      res.status(201).json(tarefa);
-    } catch (erro) {
-      res.status(400).json({ erro: erro.message });
-    }
-  },
+exports.criar = async (req, res) => {
+  try {
+    const { titulo, descricao, responsavel, status } = req.body;
+    const tarefa = await Tarefa.create({ titulo, descricao, responsavel, status });
+    res.status(201).json(tarefa);
+  } catch (err) {
+    res.status(500).json({ erro: err.message });
+  }
+};
 
-  async alterarStatus(req, res) {
+exports.deletar = async (req, res) => {
+  try {
     const { id } = req.params;
-    const tarefa = await Tarefa.findByPk(id);
-    if (!tarefa) return res.status(404).json({ erro: "Tarefa não encontrada." });
-
-    const estados = ["Pendente", "Em Andamento", "Concluída"];
-    const atual = estados.indexOf(tarefa.status);
-    tarefa.status = estados[(atual + 1) % estados.length];
-    await tarefa.save();
-    res.json(tarefa);
-  },
-
-  async remover(req, res) {
-    const { id } = req.params;
-    const tarefa = await Tarefa.findByPk(id);
-    if (!tarefa) return res.status(404).json({ erro: "Tarefa não encontrada." });
-
-    await tarefa.destroy();
-    res.status(204).send();
-  },
+    const qtd = await Tarefa.destroy({ where: { id } });
+    if (qtd === 0) return res.status(404).json({ erro: 'Tarefa não encontrada' });
+    res.status(204).end();
+  } catch (err) {
+    res.status(500).json({ erro: err.message });
+  }
 };

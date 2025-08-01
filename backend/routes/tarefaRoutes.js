@@ -1,10 +1,9 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const controller = require("../controllers/tarefaController");
+const tarefaController = require('../controllers/tarefaController');
 
-router.get("/tarefas", controller.listar);
-router.post("/tarefas", controller.criar);
-router.patch("/tarefas/:id/status", controller.alterarStatus);
-router.delete("/tarefas/:id", controller.remover);
+router.get('/tarefas', tarefaController.listar);
+router.post('/tarefas', tarefaController.criar);
+router.delete('/tarefas/:id', tarefaController.deletar);
 
 module.exports = router;

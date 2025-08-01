@@ -1,23 +1,23 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../database/db");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../database/db');
 
-const Tarefa = sequelize.define("Tarefa", {
+const Tarefa = sequelize.define('Tarefa', {
   titulo: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: false
   },
   descricao: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: false
   },
   responsavel: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: false
   },
   status: {
     type: DataTypes.STRING,
-    defaultValue: "Pendente",
-  },
+    defaultValue: 'Pendente'
+  }
 });
 
 module.exports = Tarefa;
