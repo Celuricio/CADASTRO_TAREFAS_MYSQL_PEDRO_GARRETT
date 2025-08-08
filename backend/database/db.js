@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
-const sequelize = new Sequelize ({
-  dialect: 'sqlite',
-  storage: './tarefas.db'
+const sequelize = new Sequelize ("cadastro_tarefas", "tarefas_user", "123456", {
+  dialect: 'mysql',
+  timestamp: false,
 });
 
 sequelize.authenticate()

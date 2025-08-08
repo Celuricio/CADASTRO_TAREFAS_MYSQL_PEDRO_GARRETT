@@ -9,6 +9,11 @@ const tarefaRoutes = require('./routes/tarefaRoutes');
 app.use(cors());
 app.use(express.json());
 app.use('/api', tarefaRoutes);
+app.post('/tarefas', (req, res) => {
+    console.log(req.body);
+    // Lógica para processar a tarefa
+    res.status(201).send('Tarefa recebida');
+});
 
 sequelize.sync()
   .then(() => {
